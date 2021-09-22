@@ -1,45 +1,84 @@
-import { Form, Input, Button } from 'antd';
+import { useState } from 'react';
+import { Form, Input, Button, Alert } from 'antd';
+import { useHistory } from 'react-router';
+import { useAuth } from '../../../../contexts/AuthContext';
+import { LoginFields } from '../../types';
+import { Error } from '../../../../types';
+import { AxiosError } from 'axios';
 
 const SignInForm = () => {
-  const onFinish = (values: any) => {
-    console.log('Success:', values);
-  };
+  const { login } = useAuth();
+  const history = useHistory();
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const onFinish = async (values: LoginFields) => {
+    try {
+      setError(null);
+      setSubmitting(true);
+      await login(values);
+      history.push('/tickets');
+    } catch (err) {
+      const error: AxiosError<Error> = err;
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError(error.message);
+      }
+      setSubmitting(false);
+    }
   };
 
   return (
-    <Form
-      name="basic"
-      initialValues={{ remember: true }}
-      layout="vertical"
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-    >
-      <Form.Item
-        label="Email"
-        name="email"
-        rules={[{ required: true, message: 'Please input your email!' }]}
-      >
-        <Input type="email" size="large" />
-      </Form.Item>
+    <>
+      {error && (
+        <Alert
+          type="error"
+          style={{ marginBottom: 20 }}
+          message={error}
+          showIcon
+          banner
+        />
+      )}
 
-      <Form.Item
-        label="Password"
-        name="password"
-        rules={[{ required: true, message: 'Please input your password!' }]}
+      <Form
+        name="basic"
+        initialValues={{ remember: true }}
+        layout="vertical"
+        onFinish={onFinish}
+        autoComplete="off"
       >
-        <Input.Password size="large" />
-      </Form.Item>
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[{ required: true, message: 'Please input your email!' }]}
+        >
+          <Input type="email" size="large" />
+        </Form.Item>
 
-      <Form.Item>
-        <Button type="primary" htmlType="submit" size="large" block>
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={[{ required: true, message: 'Please input your password!' }]}
+        >
+          <Input.Password size="large" />
+        </Form.Item>
+
+        <Form.Item>
+          <Button
+            disabled={submitting}
+            loading={submitting}
+            type="primary"
+            htmlType="submit"
+            size="large"
+            block
+          >
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    </>
   );
 };
 
