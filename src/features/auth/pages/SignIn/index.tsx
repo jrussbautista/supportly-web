@@ -13,7 +13,7 @@ const SignIn = () => {
       <SignInForm />
       <div>
         <Text>
-          Don't have an account?
+          {"Don't have an account?"}
           <Link to="/sign-up"> Sign Up.</Link>
         </Text>
       </div>

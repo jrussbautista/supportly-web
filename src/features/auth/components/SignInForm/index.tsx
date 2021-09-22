@@ -1,10 +1,11 @@
-import { useState } from 'react';
 import { Form, Input, Button, Alert } from 'antd';
-import { useHistory } from 'react-router';
-import { useAuth } from '../../../../contexts/AuthContext';
-import { LoginFields } from '../../types';
-import { Error } from '../../../../types';
 import { AxiosError } from 'axios';
+import { useState } from 'react';
+import { useHistory } from 'react-router';
+
+import { useAuth } from '../../../../contexts/AuthContext';
+import { Error } from '../../../../types';
+import { LoginFields } from '../../types';
 
 const SignInForm = () => {
   const { login } = useAuth();
@@ -32,15 +33,7 @@ const SignInForm = () => {
 
   return (
     <>
-      {error && (
-        <Alert
-          type="error"
-          style={{ marginBottom: 20 }}
-          message={error}
-          showIcon
-          banner
-        />
-      )}
+      {error && <Alert type="error" style={{ marginBottom: 20 }} message={error} showIcon banner />}
 
       <Form
         name="basic"

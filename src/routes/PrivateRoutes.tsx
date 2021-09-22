@@ -1,4 +1,5 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
+
 import Tickets from '../features/tickets/pages/Tickets';
 
 const PrivateRoutes = () => {

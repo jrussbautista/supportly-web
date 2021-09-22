@@ -1,7 +1,8 @@
 import { createContext, useState, useContext } from 'react';
-import { User } from '../features/users/types';
+
 import * as AuthAPI from '../features/auth/api';
 import { LoginFields } from '../features/auth/types';
+import { User } from '../features/users/types';
 
 interface State {
   currentUser: User | null;
@@ -17,9 +18,7 @@ const AuthContext = createContext<Context | undefined>(undefined);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const currentUserLocalStorage = localStorage.getItem('currentUser');
-  const initialCurrentUser = currentUserLocalStorage
-    ? JSON.parse(currentUserLocalStorage)
-    : null;
+  const initialCurrentUser = currentUserLocalStorage ? JSON.parse(currentUserLocalStorage) : null;
 
   const initialAccessToken = localStorage.getItem('accessToken') || null;
   const initialIsAuthenticated = Boolean(initialAccessToken);
