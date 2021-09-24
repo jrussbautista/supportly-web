@@ -1,7 +1,7 @@
 import { createContext, useState, useContext } from 'react';
 
 import * as AuthAPI from '../features/auth/api';
-import { LoginFields } from '../features/auth/types';
+import { LoginFields, SignUpFields } from '../features/auth/types';
 import { User } from '../features/users/types';
 
 interface State {
@@ -12,6 +12,7 @@ interface State {
 
 interface Context extends State {
   login(fields: LoginFields): Promise<void>;
+  signUp(fields: SignUpFields): Promise<void>;
 }
 
 const AuthContext = createContext<Context | undefined>(undefined);
@@ -44,9 +45,25 @@ export const AuthProvider: React.FC = ({ children }) => {
     });
   };
 
+  const signUp = async (fields: SignUpFields) => {
+    const { data } = await AuthAPI.signUp(fields);
+    const { token, user } = data;
+
+    localStorage.setItem('accessToken', token);
+    localStorage.setItem('currentUser', JSON.stringify(user));
+
+    setState({
+      ...state,
+      isAuthenticated: true,
+      accessToken: token,
+      currentUser: user,
+    });
+  };
+
   const value = {
     ...state,
     login,
+    signUp,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

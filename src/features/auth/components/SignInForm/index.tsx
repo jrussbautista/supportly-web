@@ -12,20 +12,20 @@ const SignInForm = () => {
   const history = useHistory();
 
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onFinish = async (values: LoginFields) => {
     try {
-      setError(null);
+      setErrorMessage(null);
       setSubmitting(true);
       await login(values);
       history.push('/tickets');
     } catch (err) {
       const error: AxiosError<Error> = err;
       if (error.response) {
-        setError(error.response.data.message);
+        setErrorMessage(error.response.data.message);
       } else {
-        setError(error.message);
+        setErrorMessage(error.message);
       }
       setSubmitting(false);
     }
@@ -33,15 +33,11 @@ const SignInForm = () => {
 
   return (
     <>
-      {error && <Alert type="error" style={{ marginBottom: 20 }} message={error} showIcon banner />}
+      {errorMessage && (
+        <Alert type="error" style={{ marginBottom: 20 }} message={errorMessage} showIcon banner />
+      )}
 
-      <Form
-        name="basic"
-        initialValues={{ remember: true }}
-        layout="vertical"
-        onFinish={onFinish}
-        autoComplete="off"
-      >
+      <Form name="basic" layout="vertical" onFinish={onFinish} autoComplete="off">
         <Form.Item
           label="Email"
           name="email"
