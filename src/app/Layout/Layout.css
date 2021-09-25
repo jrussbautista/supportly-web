@@ -1,0 +1,15 @@
+.layout {
+  height: 100vh;
+}
+
+.ant-layout {
+  height: 100%;
+}
+
+.content {
+  margin: 24px 20px 0;
+}
+
+.main {
+  min-height: 360px;
+}

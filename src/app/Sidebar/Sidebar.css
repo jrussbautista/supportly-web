@@ -1,0 +1,17 @@
+.logo-container {
+  padding: 20px 12px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.logo-title {
+  color: #fff;
+  margin-bottom: 0;
+}

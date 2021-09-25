@@ -1,0 +1,19 @@
+:root {
+  --color-primary: #1890ff;
+  --color-bg-header: #ffffff;
+  --color-bg-sidebar: #363740;
+  --color-neutral-0: #ffffff;
+  --color-neutral-10: #101213;
+}
+
+.ant-layout-sider {
+  background-color: var(--color-bg-sidebar);
+}
+
+.ant-layout-header {
+  background-color: var(--color-bg-header);
+}
+
+.ant-menu.ant-menu-dark {
+  background-color: inherit;
+}

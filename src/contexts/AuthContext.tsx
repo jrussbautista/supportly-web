@@ -13,6 +13,7 @@ interface State {
 interface Context extends State {
   login(fields: LoginFields): Promise<void>;
   signUp(fields: SignUpFields): Promise<void>;
+  logOut(): void;
 }
 
 const AuthContext = createContext<Context | undefined>(undefined);
@@ -60,10 +61,17 @@ export const AuthProvider: React.FC = ({ children }) => {
     });
   };
 
+  const logOut = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('currentUser');
+    window.location.href = '/login';
+  };
+
   const value = {
     ...state,
     login,
     signUp,
+    logOut,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
