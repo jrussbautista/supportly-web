@@ -1,6 +1,8 @@
 import { Table, Space, Spin, Alert, Typography } from 'antd';
 
+import DeleteTicket from '../../components/DeleteTicket';
 import { useMyTickets } from '../../hooks';
+import { Ticket } from '../../types';
 
 const { Column } = Table;
 const { Title } = Typography;
@@ -32,7 +34,7 @@ const MyTickets = () => {
   return (
     <div>
       <Title level={3}>My Tickets</Title>
-      <Table dataSource={data}>
+      <Table dataSource={data} locale={{ emptyText: 'No tickets yet.' }}>
         <Column title="Title" dataIndex="title" key="title" />
         <Column title="Description" dataIndex="description" key="description" />
         <Column
@@ -48,13 +50,13 @@ const MyTickets = () => {
           render={(value) => <div>{value.toUpperCase()}</div>}
         />
 
-        <Column
+        <Column<Ticket>
           title="Action"
           key="action"
-          render={() => (
+          render={(_, record) => (
             <Space size="middle">
               <a>Edit </a>
-              <a>Delete</a>
+              <DeleteTicket id={record.id} />
             </Space>
           )}
         />
