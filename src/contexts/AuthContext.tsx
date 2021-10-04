@@ -3,6 +3,7 @@ import { createContext, useState, useContext } from 'react';
 import * as AuthAPI from '../features/auth/api';
 import { LoginFields, SignUpFields } from '../features/auth/types';
 import { User } from '../features/users/types';
+import { removeAuthHeaderToken, setAuthHeaderToken } from '../utils/api-client';
 
 interface State {
   currentUser: User | null;
@@ -37,6 +38,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     localStorage.setItem('accessToken', token);
     localStorage.setItem('currentUser', JSON.stringify(user));
+    setAuthHeaderToken(token);
 
     setState({
       ...state,
@@ -52,6 +54,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     localStorage.setItem('accessToken', token);
     localStorage.setItem('currentUser', JSON.stringify(user));
+    setAuthHeaderToken(token);
 
     setState({
       ...state,
@@ -64,6 +67,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   const logOut = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('currentUser');
+    removeAuthHeaderToken();
     window.location.href = '/login';
   };
 

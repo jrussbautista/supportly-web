@@ -5,7 +5,7 @@ import './Layout.css';
 const Layout: React.FC = ({ children }) => {
   return (
     <div className="container">
-      <div className="content">{children}</div>
+      <div className="auth-content">{children}</div>
     </div>
   );
 };

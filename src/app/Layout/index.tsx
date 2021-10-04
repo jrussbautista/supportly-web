@@ -16,7 +16,7 @@ const Layout: React.FC = ({ children }) => {
           <AntLayout>
             <Header />
             <Content className="content">
-              <div className="site-layout-background main">{children}</div>
+              <div className="site-layout-background">{children}</div>
             </Content>
           </AntLayout>
         </AntLayout>
