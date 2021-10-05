@@ -16,3 +16,9 @@ export interface Ticket {
   priority: Priority;
   status: Status;
 }
+
+export interface TicketField {
+  title: string;
+  description: string;
+  priority: Priority;
+}

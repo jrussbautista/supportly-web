@@ -34,7 +34,7 @@ const MyTickets = () => {
   return (
     <div>
       <Title level={3}>My Tickets</Title>
-      <Table dataSource={data} locale={{ emptyText: 'No tickets yet.' }}>
+      <Table dataSource={data} rowKey="id" locale={{ emptyText: 'No tickets yet.' }}>
         <Column title="Title" dataIndex="title" key="title" />
         <Column title="Description" dataIndex="description" key="description" />
         <Column

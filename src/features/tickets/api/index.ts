@@ -1,11 +1,17 @@
 import apiClient from '../../../utils/api-client';
-import { Ticket } from '../types/index';
+import { Ticket, TicketField } from '../types';
 
 export const getMyTickets = async (): Promise<Ticket[]> => {
   const { data } = await apiClient.get('/tickets/me');
   return data.data;
 };
 
-export const deleteTicket = (id: number): Promise<void> => {
-  return apiClient.delete(`/tickets/${id}`);
+export const deleteTicket = async (id: number): Promise<{ id: number }> => {
+  await apiClient.delete(`/tickets/${id}`);
+  return { id };
+};
+
+export const createTicket = async (fields: TicketField): Promise<Ticket> => {
+  const { data } = await apiClient.post('/tickets', fields);
+  return data.data;
 };
