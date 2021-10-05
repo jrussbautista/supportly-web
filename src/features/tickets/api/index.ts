@@ -3,7 +3,7 @@ import { Ticket, TicketField } from '../types';
 
 export const getMyTickets = async (): Promise<Ticket[]> => {
   const { data } = await apiClient.get('/tickets/me');
-  return data.data;
+  return data.tickets;
 };
 
 export const deleteTicket = async (id: number): Promise<{ id: number }> => {
@@ -13,5 +13,5 @@ export const deleteTicket = async (id: number): Promise<{ id: number }> => {
 
 export const createTicket = async (fields: TicketField): Promise<Ticket> => {
   const { data } = await apiClient.post('/tickets', fields);
-  return data.data;
+  return data.ticket;
 };

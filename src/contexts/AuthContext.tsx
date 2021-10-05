@@ -1,6 +1,7 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 
 import * as AuthAPI from '../features/auth/api';
+import { getMe } from '../features/auth/api';
 import { LoginFields, SignUpFields } from '../features/auth/types';
 import { User } from '../features/users/types';
 import { removeAuthHeaderToken, setAuthHeaderToken } from '../utils/api-client';
@@ -26,11 +27,28 @@ export const AuthProvider: React.FC = ({ children }) => {
   const initialAccessToken = localStorage.getItem('accessToken') || null;
   const initialIsAuthenticated = Boolean(initialAccessToken);
 
-  const [state, setState] = useState<State>({
+  const initialState: State = {
     currentUser: initialCurrentUser,
     accessToken: initialAccessToken,
     isAuthenticated: initialIsAuthenticated,
-  });
+  };
+
+  const [state, setState] = useState<State>(initialState);
+
+  useEffect(() => {
+    const loadCurrentUser = async () => {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        if (accessToken) {
+          const currentUser = await getMe();
+          setState((state) => ({ ...state, currentUser }));
+        }
+      } catch (error) {
+        setState({ currentUser: null, accessToken: null, isAuthenticated: false });
+      }
+    };
+    loadCurrentUser();
+  }, []);
 
   const login = async (fields: LoginFields) => {
     const { data } = await AuthAPI.login(fields);

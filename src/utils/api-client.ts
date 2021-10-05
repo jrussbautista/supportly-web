@@ -19,7 +19,10 @@ instance.interceptors.response.use(
     if (status === 401) {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('currentUser');
-      window.location.replace('/sign-in');
+      const pathname = location.pathname;
+      if (pathname !== '/sign-in') {
+        window.location.replace('/sign-in');
+      }
     }
     return Promise.reject(error);
   }
