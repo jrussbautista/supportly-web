@@ -1,4 +1,6 @@
-import { Table, Space, Spin, Alert, Typography } from 'antd';
+import { EditFilled } from '@ant-design/icons';
+import { Table, Space, Spin, Alert, Typography, Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 import DeleteTicket from '../../components/DeleteTicket';
 import { useMyTickets } from '../../hooks';
@@ -55,7 +57,9 @@ const MyTickets = () => {
           key="action"
           render={(_, record) => (
             <Space size="middle">
-              <a>Edit </a>
+              <Link to={`/tickets/${record.id}/edit`}>
+                <Button icon={<EditFilled />}>Edit</Button>
+              </Link>
               <DeleteTicket id={record.id} />
             </Space>
           )}

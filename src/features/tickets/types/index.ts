@@ -1,12 +1,12 @@
 export enum Priority {
-  Low = 'low',
-  Medium = 'medium',
-  High = 'high',
+  low,
+  medium,
+  high,
 }
 
 export enum Status {
-  Open = 'open',
-  Closed = 'closed',
+  open,
+  closed,
 }
 
 export interface Ticket {

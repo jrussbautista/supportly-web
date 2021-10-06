@@ -1,4 +1,4 @@
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined, DeleteFilled } from '@ant-design/icons';
 import { Button, Modal, notification } from 'antd';
 
 import { useDeleteTicket } from '../../hooks';
@@ -31,7 +31,11 @@ const DeleteTicket = ({ id }: Props) => {
     });
   };
 
-  return <Button onClick={showConfirmDelete}>Delete</Button>;
+  return (
+    <Button icon={<DeleteFilled />} onClick={showConfirmDelete}>
+      Delete
+    </Button>
+  );
 };
 
 export default DeleteTicket;
