@@ -39,11 +39,13 @@ export const AuthProvider: React.FC = ({ children }) => {
     const loadCurrentUser = async () => {
       try {
         const accessToken = localStorage.getItem('accessToken');
+        console.log(accessToken);
         if (accessToken) {
           const currentUser = await getMe();
           setState((state) => ({ ...state, currentUser }));
         }
       } catch (error) {
+        console.log(error);
         setState({ currentUser: null, accessToken: null, isAuthenticated: false });
       }
     };

@@ -29,7 +29,7 @@ const UpdateTicket = () => {
   const initialValues: TicketField = {
     title: data?.title || '',
     description: data?.description || '',
-    priority: data ? data.priority : Priority.low,
+    priority: data ? data.priority : Priority.LOW,
   };
 
   const mutate = useUpdateTicket();

@@ -26,7 +26,7 @@ const MyTickets = () => {
       <div>
         <Title level={3}>My Tickets</Title>
         <Alert
-          message="Sorry. We were'nt able to display your tickets right now. Please try again soo."
+          message="Sorry. We were'nt able to display your tickets right now. Please try again soon."
           type="error"
         />
       </div>

@@ -1,7 +1,7 @@
 export enum Priority {
-  low,
-  medium,
-  high,
+  LOW,
+  MEDIUM,
+  HIGH,
 }
 
 export enum Status {
