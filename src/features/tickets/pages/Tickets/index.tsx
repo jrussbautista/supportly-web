@@ -1,5 +1,72 @@
+import { EditFilled } from '@ant-design/icons';
+import { Table, Space, Spin, Alert, Typography, Button } from 'antd';
+import { Link } from 'react-router-dom';
+
+import DeleteTicket from '../../components/DeleteTicket';
+import { useTickets } from '../../hooks';
+import { Ticket } from '../../types';
+
+const { Column } = Table;
+const { Title } = Typography;
+
 const Tickets = () => {
-  return <div>tickets page here</div>;
+  const { isLoading, data, error } = useTickets();
+
+  if (isLoading) {
+    return (
+      <div className="loading-container">
+        <Title level={3}>All Tickets</Title>
+        <Spin size="large" className="" />
+      </div>
+    );
+  }
+
+  if (!data && error) {
+    return (
+      <div>
+        <Title level={3}>All Tickets</Title>
+        <Alert
+          message="Sorry. We were'nt able to display your tickets right now. Please try again soon."
+          type="error"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <Title level={3}>All Tickets</Title>
+      <Table dataSource={data} rowKey="id" locale={{ emptyText: 'No tickets yet.' }}>
+        <Column title="Title" dataIndex="title" key="title" />
+        <Column title="Description" dataIndex="description" key="description" />
+        <Column
+          title="Priority"
+          dataIndex="priority"
+          key="priority"
+          render={(value) => <div>{value.toUpperCase()}</div>}
+        />
+        <Column
+          title="Status"
+          dataIndex="status"
+          key="status"
+          render={(value) => <div>{value.toUpperCase()}</div>}
+        />
+
+        <Column<Ticket>
+          title="Action"
+          key="action"
+          render={(_, record) => (
+            <Space size="middle">
+              <Link to={`/tickets/${record.id}/edit`}>
+                <Button icon={<EditFilled />}>Edit</Button>
+              </Link>
+              <DeleteTicket id={record.id} />
+            </Space>
+          )}
+        />
+      </Table>
+    </div>
+  );
 };
 
 export default Tickets;

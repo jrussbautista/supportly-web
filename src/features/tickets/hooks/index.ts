@@ -1,11 +1,22 @@
 import { useMutation, useQuery } from 'react-query';
 
 import { queryClient } from '../../../lib/react-query';
-import { deleteTicket, getMyTickets, createTicket, updateTicket, getTicket } from '../api';
+import {
+  deleteTicket,
+  getMyTickets,
+  createTicket,
+  updateTicket,
+  getTicket,
+  getTickets,
+} from '../api';
 import { Ticket } from '../types';
 
 export const useMyTickets = () => {
   return useQuery<Ticket[]>({ queryKey: ['myTickets'], queryFn: () => getMyTickets() });
+};
+
+export const useTickets = () => {
+  return useQuery<Ticket[]>({ queryKey: ['tickets'], queryFn: () => getTickets() });
 };
 
 export const useTicket = (id: number) => {
